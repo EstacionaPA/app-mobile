@@ -1,0 +1,86 @@
+<ion-view view-title="Informações para consultar">
+    <ion-content>
+        <form name="form">
+            <label class="item item-input item-select">
+                 <div class="input-label">
+                    Hora Inicial                     
+                 </div>
+                 <select id="hourInit" ng-model="register.hora_reserva">
+                     <option>00:00:00</option>
+                     <option>01:00:00</option>
+                     <option>02:00:00</option>
+                     <option>03:00:00</option>
+                     <option>04:00:00</option>
+                     <option>05:00:00</option>
+                     <option>06:00:00</option>
+                     <option>07:00:00</option>
+                     <option>08:00:00</option>
+                     <option>09:00:00</option>
+                     <option>10:00:00</option>
+                     <option>11:00:00</option>
+                     <option>12:00:00</option>
+                     <option>13:00:00</option>
+                     <option>14:00:00</option>
+                     <option>15:00:00</option>
+                     <option>16:00:00</option>
+                     <option>17:00:00</option>
+                     <option>18:00:00</option>
+                     <option>19:00:00</option>
+                     <option>20:00:00</option>
+                     <option>21:00:00</option>
+                     <option>22:00:00</option>
+                     <option>23:00:00</option>
+                 </select>
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Hora Final
+                </div>
+                <select id="hourEnd" ng-model="register.hora_fim">
+                     <option>00:00:00</option>
+                     <option>01:00:00</option>
+                     <option>02:00:00</option>
+                     <option>03:00:00</option>
+                     <option>04:00:00</option>
+                     <option>05:00:00</option>
+                     <option>06:00:00</option>
+                     <option>07:00:00</option>
+                     <option>08:00:00</option>
+                     <option>09:00:00</option>
+                     <option>10:00:00</option>
+                     <option>11:00:00</option>
+                     <option>12:00:00</option>
+                     <option>13:00:00</option>
+                     <option>14:00:00</option>
+                     <option>15:00:00</option>
+                     <option>16:00:00</option>
+                     <option>17:00:00</option>
+                     <option>18:00:00</option>
+                     <option>19:00:00</option>
+                     <option>20:00:00</option>
+                     <option>21:00:00</option>
+                     <option>22:00:00</option>
+                     <option>23:00:00</option>
+                </select>
+            </label>
+            <label for="" class="item item-input">
+                <div class="input-label">
+                    Data
+                </div>
+                <input type="text" ng-model="register.data" placeholder="DD/MM/YYYY"></input>
+            </label>   
+            <button 
+                class="button button-block button-positive" 
+                ng-click="consultar($event)" 
+                ng-disabled="form.$invalid">
+                Consultar
+            </button>
+            
+            <p class="{{ActionCssFeedback}}">{{Feedback}}</p>
+            <div class="{{ActionCssPakrs}}" id="Result">
+                {{RestVacancies}}
+            </div>
+            
+        </form>
+    </ion-content>
+</ion-view>

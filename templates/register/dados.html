@@ -1,0 +1,86 @@
+<ion-view view-title="Dados Completos">
+    <ion-content>
+        <form ng-submit="register()">
+            <div class="{{actionFormSystem}}">
+                <h3>Dados de Usuário</h3>
+                <label class="item item-input">
+                    <span class="input-label">Usuário</span>
+                    <input type="text" ng-model="registerData.user">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Senha</span>
+                    <input type="password" ng-model="registerData.pass">
+                </label>
+                
+                <div class="button button-block button-positive" ng-click="toFormPersonal()">Próximo</div>
+            </div>
+
+            <div class="{{actionFormPersonal}}">
+                <h3>Dados Pessoais</h3>
+                <label class="item item-input">
+                    <span class="input-label">Nome Completo</span>
+                    <input type="text" ng-model="registerData.name">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">CPF</span>
+                    <input type="text" ng-model="registerData.cpf">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Telefone</span>
+                    <input type="text" ng-model="registerData.tel">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Celular</span>
+                    <input type="text" ng-model="registerData.cel">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Email</span>
+                    <input type="text" ng-model="registerData.email">
+                </label>
+                
+                <div class="button button-block button-positive" ng-click="backFormSystem()">Voltar</div>
+                <div class="button button-block button-positive" ng-click="toFormGeografic()">Próximo</div>
+                
+            </div>
+
+            <div class="{{actionFormGeografic}}">
+                <h3>Dados Geograficos</h3>
+                <label class="item item-input">
+                    <span class="input-label">Endereço</span>
+                    <input type="text" ng-model="registerData.address">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Complemento</span>
+                    <input type="text" ng-model="registerData.comp">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Bairro</span>
+                    <input type="text" ng-model="registerData.block">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Número</span>
+                    <input type="text" ng-model="registerData.number">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">CEP</span>
+                    <input type="text" ng-model="registerData.cep">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Cidade</span>
+                    <input type="text" ng-model="registerData.city">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Estado</span>
+                    <input type="text" ng-model="registerData.state">
+                </label>
+                
+                <div class="button button-block button-positive" ng-click="backFormPersonal()">Voltar</div>
+                
+                <button class="button button-block button-positive" type="submit" ng-click="">Registrar</button>
+                
+                <p class="{{classBootStrap}}">{{validRegister}}</p>
+                
+            </div>
+        </form>
+    </ion-content>
+</ion-view>

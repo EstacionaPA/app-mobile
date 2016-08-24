@@ -1,0 +1,45 @@
+ion-content {
+    background:url("../img/fundo.png") no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+title {
+    display: block;
+}
+
+.platform-browser .hidden {
+    display: none;
+}
+
+.platform-browser .message-output{
+    border-left: 5px solid;
+    padding: 5px;
+    transition: 0.2s; 
+    font-weight: bold;
+}
+
+.platform-browser .success {
+    border-left-color: #118607;
+    background-color: #d2f4ba;
+}
+
+.platform-browser .warning {
+    border-left-color: #e2d900;
+    background-color: #ffff9a;
+}
+
+.platform-browser .info {
+    border-left-color: #0014ff;
+    background-color: #bfc1f5;
+}
+
+.platform-browser .danger {
+    border-left-color: #b20000;
+    background-color: #f5bfbf;
+}
+
+
+
+
+    

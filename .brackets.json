@@ -1,0 +1,16 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/home/andre/Pessoal/Devlopment/myapp/www/lib/ionic/js/angular-ui/angular-ui-router.js",
+        "/home/andre/Pessoal/Devlopment/myapp/www/js/app.js",
+        "/home/andre/Pessoal/Devlopment/myapp/www/lib/ionic/js/angular-ui/angular-ui-router.min.js",
+        "/home/andre/Pessoal/Devlopment/myapp/www/lib/ionic/js/angular/angular-sanitize.min.js",
+        "/home/andre/Pessoal/Devlopment/myapp/www/lib/ionic/js/angular/angular-resource.js",
+        "/home/andre/Pessoal/Devlopment/myapp/www/lib/ionic/js/angular/angular-animate.min.js",
+        "/home/andre/Pessoal/Devlopment/myapp/www/lib/ionic/js/angular/angular-resource.min.js",
+        "/home/andre/Pessoal/Devlopment/myapp/www/lib/ionic/js/angular/angular.min.js",
+        "/home/andre/Pessoal/Devlopment/myapp/www/lib/ionic/js/angular/angular.js",
+        "/home/andre/Pessoal/Devlopment/myapp/www/lib/ionic/js/angular/angular-animate.js",
+        "/home/andre/Pessoal/Devlopment/myapp/www/lib/ionic/js/angular/angular-sanitize.js",
+        "/home/andre/Pessoal/Devlopment/myapp/www/lib/ionic/js/ionic.js"
+    ]
+}
