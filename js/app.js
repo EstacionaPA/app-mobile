@@ -75,10 +75,21 @@ $stateProvider
     url: '/showvacancy',
     views: {
         'menuContent': {
-            templateUrl: 'templates/vacancies/vacancies.html',
+            templateUrl: 'templates/vacancies.html',
             controller: 'AppVacancy'
         }
     }
+})
+
+.state('app.showparks', {
+    url: '/showparks',
+    views: {
+        'menuContent': {
+            templateUrl: 'templates/parksopen.html',
+            controller: 'AppParks'
+        }
+    },
+    cache: false
 })
 
 .state('app.init', {

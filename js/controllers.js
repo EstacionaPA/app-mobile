@@ -142,7 +142,8 @@ angular.module('starter.controllers', [])
     }
 })
 
-.controller('AppVacancy', function($scope, $ionicModal, $timeout, $http) {
+.controller('AppVacancy', function($scope, $ionicModal, $timeout, $http, $state) {
+    
     
     
     var addPark = true;
@@ -173,7 +174,7 @@ angular.module('starter.controllers', [])
                 
                 .success(function (data, status, header, config) {
                     
-                    $scope.Feeback = 'Analizando...'; 
+                    $scope.Feedback = 'Analizando...'; 
                     $scope.ActionCssFeedback = 'message-output neutral';
                     
                     if(data == 'empty'){
@@ -241,32 +242,28 @@ angular.module('starter.controllers', [])
     
     $scope.ListParks = function () {
         
-        var div = document.createElement('ul');
+        var ul = document.createElement('ul');
         
-        div.className = 'list';
+        ul.className = 'list';
         
         $scope.Feedback = 'Atenção! Os estacionamentos aqui não listados são  os possuem todas as vagas disponíveis.';
         $scope.ActionCssFeedback = 'message-output warning';
         
         for(var i = 0; i < parks.length; i++){
 
-            var subDiv = null;
-            subDiv = document.createElement('a');
-            subDiv.className = 'item message-output info';
-            subDiv.id = parks[i].id;
-            subDiv.setAttribute('ng-click', '');
-            subDiv.innerHTML = parks[i].nome + 
-                               '<br>' + 
+            var a = null;
+            a = document.createElement('a');
+            a.className = 'item message-output info';
+            a.id = parks[i].id;
+            a.setAttribute('ng-click', '');
+            a.innerHTML = parks[i].nome + 
+                               '<br>' + //NOT FOUND ANOTHER BETTER SOLUTION
                                'Rua: ' +
-                               '<br>' +
+                               '<br>' +  
                                'Tem ' + parks[i].qtdRestVacancies + ' vagas sobrando em um total de ' + parks[i].qtdMaxVacancies;
-            div.appendChild(subDiv);
-            document.getElementById('Result').appendChild(div);
-            //$scope.RestVacancies = $scope.RestVacancies + div;
-
+            ul.appendChild(a);
+            document.getElementById('Result').appendChild(ul);
         }
-        
-        //document.getElementById('Result').appendChild(div);
     }
 
 })
@@ -305,8 +302,12 @@ if(data == 'empty'){
 
 })
 
-.controller('AppVacanciesResult', function($scope, $stateParams) {
+.controller('AppParks', function($scope, $stateParams, $state) {
+
+    parks = [];
+    $scope.Fe
     
+    alert($state.current.name);
 });
 
                             //-------------------//
@@ -320,8 +321,8 @@ var parks = [];
 
 var con = {
     //url: 'http://estacionapa.com.br'
-    url: 'http://10.0.0.104:80'
-    //url: 'http://192.168.43.100:80'
+    //url: 'http://10.0.0.104:80'
+    url: 'http://192.168.43.100:80'
     //url: 'http://192.168.40.180:80'
 };
 
