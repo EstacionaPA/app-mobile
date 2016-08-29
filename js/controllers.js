@@ -305,9 +305,9 @@ if(data == 'empty'){
 .controller('AppParks', function($scope, $stateParams, $state) {
 
     parks = [];
-    $scope.Fe
-    
-    alert($state.current.name);
+    $scope.Feedback = 'Verificando conexão com a internet...';
+    $scope.FeedbackCss = 'message-output neutral';
+
 });
 
                             //-------------------//
