@@ -273,40 +273,67 @@ angular.module('starter.controllers', [])
 })
 
 .controller('', function($scope) {
-                    
-    
-var data = '';
-if(data == 'empty'){
-    $scope.Feedback = 'Todos os estacionamentos disponíveis estão vazios. Registre uma vaga!';
-    return 0;
-}else if(data == '!validHourConsult'){
-    $scope.Feedback = 'A hora é inválida!';
-    return 0;
-}else if(data == '!validHourEnd'){
-    $scope.Feedback = 'O horario de fim escolhido está entre uma vaga já utilizada!';
-    return 0;
-}else if(data == '!validHourInit'){
-    $scope.Feedback = 'O horario do inicio da reserva está entre uma vaga já escolhida!';
-    return 0;
-}else if(data == '!validHourInitBetween' || 
-         data == '!validHourInitEnd'){
-    $scope.Feedback = 'O horario escolhido está entre o horario de uma vaga já escolhido!';
-    return 0;
-}else if(data == ''){
-    $scope.Feedback = '';
-    return 0;
-}else if(data == ''){
-    $scope.Feedback = '';
-    return 0;
+    var data = '';
+    if(data == 'empty'){
+        $scope.Feedback = 'Todos os estacionamentos disponíveis estão vazios. Registre uma vaga!';
+        return 0;
+    }else if(data == '!validHourConsult'){
+        $scope.Feedback = 'A hora é inválida!';
+        return 0;
+    }else if(data == '!validHourEnd'){
+        $scope.Feedback = 'O horario de fim escolhido está entre uma vaga já utilizada!';
+        return 0;
+    }else if(data == '!validHourInit'){
+        $scope.Feedback = 'O horario do inicio da reserva está entre uma vaga já escolhida!';
+        return 0;
+    }else if(data == '!validHourInitBetween' || 
+            data == '!validHourInitEnd'){
+        $scope.Feedback = 'O horario escolhido está entre o horario de uma vaga já escolhido!';
+        return 0;
+    }else if(data == ''){
+        $scope.Feedback = '';
+        return 0;
+    }else if(data == ''){
+        $scope.Feedback = '';
+        return 0;
 }
 
 })
 
-.controller('AppParks', function($scope, $stateParams, $state) {
+.controller('AppParks', function($scope, $stateParams, $state, $http) {
 
     parks = [];
     $scope.Feedback = 'Verificando conexão com a internet...';
     $scope.FeedbackCss = 'message-output neutral';
+
+    $http.post(con.url + '/getParks',
+               config)
+               .success(function(data, status, header, config){
+                   $scope.FeedbackCss = 'hidden';
+                   var ul = document.createElement('ul');
+                   ul.className = 'list';
+                   for(var i = 0; i<data.length; i++){
+                      var a = document.createElement('a');
+                      a.className = 'item message-output info' ;
+                      a.innerHTML = 'Estacionamento: ' + data[i].estacionamento + 
+                                    '<br>' +
+                                    'Responsável: ' + data[i].responsavel + 
+                                    '<br>' +  
+                                    'Horario: ' + data[i].h_func_init + ' Até ' + data[i].h_func_fim;
+                      ul.appendChild(a);
+                      document.getElementById('ListParksOpen').appendChild(ul);
+                     
+                   }
+                
+               });
+
+    $scope.addParks = function () {
+
+    };
+
+    $scope.listParks = function () {
+
+    };
 
 });
 
@@ -319,10 +346,12 @@ if(data == 'empty'){
                             //-------------------//
 var parks = [];
 
+var parksOpen = [];
+
 var con = {
-    //url: 'http://estacionapa.com.br'
-    //url: 'http://10.0.0.104:80'
-    url: 'http://192.168.43.100:80'
+    url: 'http://estacionapa.com.br'
+    //url: 'http://192.168.0.103:80'
+    //url: 'http://192.168.43.100:80'
     //url: 'http://192.168.40.180:80'
 };
 
