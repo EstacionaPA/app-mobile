@@ -168,6 +168,15 @@ $stateProvider
     }
 })
 
+.state('app.sair', {
+    url: '/sair',
+    views: {
+        'menuContent': {
+            controller: 'sair'
+        }
+    }
+})
+
 /*.state('app.single', {
     url: '/playlists/:playlistId',
         views: {

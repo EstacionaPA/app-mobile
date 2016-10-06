@@ -69,6 +69,7 @@ angular.module('starter.controllers', [])
                             $scope.ActionCss = 'message-output success';
                             $scope.validLogin = 'Logado com sucesso!';
                             person.user = $scope.loginData.user;
+                            person.pass = $scope.loginData.pass;
                             $scope.checkSession();
                         }
                         else if(data == '!user!pass'){
@@ -373,7 +374,18 @@ angular.module('starter.controllers', [])
 
     };
 
-});
+})
+
+.controller('sair', function($scope, $ionicHistory, $state) {
+    
+    person.user = '';
+    person.pass = '';
+    $ionicHistory.clearHistory();
+    $ionicHistory.clearCache();
+    $ionicHistory.nextViewOptions({ disableBack: true, historyRoot: true });
+    $state.go('app.init');
+
+})
 
                             //-------------------//
                             //-------------------//                
