@@ -1,0 +1,107 @@
+<ion-view view-title="Registro de Vagas">
+    <ion-content>
+        <div class="{{ActionForm}}">
+            <form name="form">
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Carro                    
+                    </div>
+                    <select id="car" ng-model="dados.id_carro">
+                        
+                    </select>
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Estacionamento
+                    </div>
+                    <select id="estac" ng-model="dados.id_estac">
+
+                    </select>
+                </label>
+                <label for="" class="item item-input">
+                    <div class="input-label">
+                        Vaga
+                    </div>
+                    <input type="text" ng-model="dados.vaga" placeholder="OU DEIXE VAZIO"></input>
+                </label> 
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Hora Inicial                     
+                    </div>
+                    <select id="hourInit" ng-model="dados.hora_reserva">
+                        <option value="teste">00:00:00</option>
+                        <option>01:00:00</option>
+                        <option>02:00:00</option>
+                        <option>03:00:00</option>
+                        <option>04:00:00</option>
+                        <option>05:00:00</option>
+                        <option>06:00:00</option>
+                        <option>07:00:00</option>
+                        <option>08:00:00</option>
+                        <option>09:00:00</option>
+                        <option>10:00:00</option>
+                        <option>11:00:00</option>
+                        <option>12:00:00</option>
+                        <option>13:00:00</option>
+                        <option>14:00:00</option>
+                        <option>15:00:00</option>
+                        <option>16:00:00</option>
+                        <option>17:00:00</option>
+                        <option>18:00:00</option>
+                        <option>19:00:00</option>
+                        <option>20:00:00</option>
+                        <option>21:00:00</option>
+                        <option>22:00:00</option>
+                        <option>23:00:00</option>
+                    </select>
+                </label>  
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Hora Final                     
+                    </div>
+                    <select id="hourEnd" ng-model="dados.hora_fim">
+                        <option>00:00:00</option>
+                        <option>01:00:00</option>
+                        <option>02:00:00</option>
+                        <option>03:00:00</option>
+                        <option>04:00:00</option>
+                        <option>05:00:00</option>
+                        <option>06:00:00</option>
+                        <option>07:00:00</option>
+                        <option>08:00:00</option>
+                        <option>09:00:00</option>
+                        <option>10:00:00</option>
+                        <option>11:00:00</option>
+                        <option>12:00:00</option>
+                        <option>13:00:00</option>
+                        <option>14:00:00</option>
+                        <option>15:00:00</option>
+                        <option>16:00:00</option>
+                        <option>17:00:00</option>
+                        <option>18:00:00</option>
+                        <option>19:00:00</option>
+                        <option>20:00:00</option>
+                        <option>21:00:00</option>
+                        <option>22:00:00</option>
+                        <option>23:00:00</option>
+                    </select>
+                </label> 
+            <label for="" class="item item-input">
+                <div class="input-label">
+                    Data
+                </div>
+                <input type="text" ng-model="dados.data" placeholder="DD/MM/YYYY"></input>
+            </label> 
+                <button 
+                    class="button button-block button-positive" 
+                    ng-click="reservar()"
+                    Reservar
+                </button>
+            </form>
+        </div>
+        <p class="{{ActionCssFeedback}}">{{Feedback}}</p>
+        <div class="{{ActionCssPakrs}}" id="Result">
+
+        </div>
+    </ion-content>
+</ion-view>

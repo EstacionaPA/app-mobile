@@ -33,7 +33,7 @@ angular.module('starter.controllers', [])
                                 document.location = '#/client/init';
                             }
                             else if(type == 'init' && data.accessLogin == '!login'){
-                                
+                                document.location = '#/app/login';
                             }
                         })
 
@@ -58,6 +58,7 @@ angular.module('starter.controllers', [])
     }
     $scope.doRequest = function () {
 
+        $scope.ActionCss = 'message-output neutral';
         $scope.validLogin = 'Verificando conexão com internet e fazendo requisição...'; 
 
         $http.post(con.url + '/login/valid', 
@@ -182,9 +183,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AppVacancy', function($scope, $ionicModal, $timeout, $http, $state) {
-    
-    
-    
     var addPark = true;
     $scope.register = {};
     $scope.register.hora_reserva = '';
@@ -376,6 +374,111 @@ angular.module('starter.controllers', [])
 
 })
 
+.controller('RegisterVacancy', function($scope, $stateParams, $state, $http, $ionicHistory) {
+    
+    $scope.dados = {};
+    $scope.dados.id_carro = ''; 
+    $scope.dados.id_estac = '';
+    $scope.dados.vaga = '';
+    $scope.dados.hora_reserva = '';
+    $scope.dados.hora_fim = '';
+    $scope.dados.data = '';
+
+    $scope.ActionForm = 'hidden';
+    $scope.ActionCssFeedback = 'message-output neutral';
+    $scope.Feedback = 'Requisitando informações...';
+
+   /* if(person.user == '') {
+            $scope.ActionForm = 'hidden';
+            $scope.ActionCssFeedback = 'message-output neutral';
+            $scope.Feedback = 'Por favor, refaça o login...';
+            return 0;
+    }*/
+
+    $http.post(con.url + '/getParks',
+                           config)
+                .success(function (data, status, header, config) {
+                    for(var i = 0; i<data.length; i++){
+                        var option = document.createElement('option');
+                        option.value = data[i].id;
+                        option.innerHTML = data[i].estacionamento;
+                        document.getElementById('estac').appendChild(option);
+                    }
+                })
+                .error(function(data){
+                    $scope.ActionCssFeedback = 'message-output warning';
+                    $scope.Feedback = 'Nova tentativa...';
+                    $state.reload();
+                })
+
+    $http.post(con.url + '/getCars',
+                        JSON.stringify(person),
+                        config)
+            .success(function (data, status, header, config) {
+                for(var i = 0; i<data.length; i++){
+                    var option = document.createElement('option');
+                    option.value = data[i].id_carro;
+                    option.innerHTML = 'Placa: ' + data[i].placa + ' *** ' + data[i].modelo + ' *** ' + data[i].marca;
+                    document.getElementById('car').appendChild(option);
+                }
+            })
+            .error(function(data){
+                $scope.ActionCssFeedback = 'message-output warning';
+                $scope.Feedback = 'Nova tentativa...';
+                $state.reload();
+            })
+
+    $scope.ActionForm = '';
+    $scope.ActionCssFeedback = 'hidden';
+    $scope.Feedback = '';
+    
+    $scope.reservar = function () {
+        
+        if($scope.dados.id_carro != '' && $scope.dados.id_estac != '' &&
+            $scope.dados.hora_reserva != '' && $scope.dados.hora_fim != '' &&
+            $scope.dados.data != ''){
+            
+            $scope.dados.usuario = person.user;
+            
+            alert(JSON.stringify($scope.dados));
+            
+            $http.post(con.url + '/vacancies/request',
+                        JSON.stringify($scope.dados),
+                        config)
+            .success(function (data, status, header, config) {
+                alert(data);
+                /*
+                if(data == '!validHourConsult'){
+                    $scope.Feedback = 'A hora é inválida!';
+                    return 0;
+                }else if(data == '!validHourEnd'){
+                    $scope.Feedback = 'O horario de fim escolhido está entre uma vaga já utilizada!';
+                    return 0;
+                }else if(data == '!validHourInit'){
+                    $scope.Feedback = 'O horario do inicio da reserva está entre uma vaga já escolhida!';
+                    return 0;
+                }else if(data == '!validHourInitBetween' || 
+                        data == '!validHourInitEnd'){
+                            $scope.Feedback = 'O horario escolhido está entre o horario de uma vaga já escolhido!';
+                            return 0;
+                }
+                */
+            })
+            .error(function(data){
+                $scope.ActionCssFeedback = 'message-output warning';
+                $scope.Feedback = 'Não foi possivel fazer conexão. Verifique a internet e tentenovamente!';
+            });
+            
+        }
+        else{
+                $scope.ActionCssFeedback = 'message-output warning';
+                $scope.Feedback = 'Preencha os campos obrigatórios!...';
+            }
+
+            
+    }
+})
+
 .controller('sair', function($scope, $ionicHistory, $state) {
     
     person.user = '';
@@ -383,7 +486,8 @@ angular.module('starter.controllers', [])
     $ionicHistory.clearHistory();
     $ionicHistory.clearCache();
     $ionicHistory.nextViewOptions({ disableBack: true, historyRoot: true });
-    $state.go('app.init');
+    document.location = '#/app/init';
+    
 
 })
 
@@ -414,5 +518,5 @@ var config = {
     headers: {
               'Content-Type': 'application/json'
     },
-    timeout: 5000
+    timeout: 1000
 }

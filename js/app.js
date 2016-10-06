@@ -159,6 +159,17 @@ $stateProvider
     }
 })
 
+.state('client.registerVacancy', {
+    url: '/registerVacancy',
+    views: {
+        'menuContent': {
+            templateUrl: 'templates/login/loginClient/registerVacancy.html',
+            controller: 'RegisterVacancy'
+        }
+    },
+    cache: false
+})
+
 .state('app.init', {
     url: '/init',
     views: {
@@ -174,7 +185,8 @@ $stateProvider
         'menuContent': {
             controller: 'sair'
         }
-    }
+    },
+    cache: false
 })
 
 /*.state('app.single', {
