@@ -49,7 +49,8 @@ $stateProvider
             templateUrl: 'templates/login/login.html',
             controller: 'AppLogin'
         }
-    }
+    },
+    cache: false
 })
 
 .state('app.register', {
@@ -90,6 +91,72 @@ $stateProvider
         }
     },
     cache: false
+})
+
+
+
+.state('master', {
+    url: '/master',
+    abstract: true,
+    templateUrl: 'templates/login/loginMaster/menu.html'
+})
+
+.state('master.init', {
+    url: '/init',
+    views: {
+        'menuContent': {
+            templateUrl: 'templates/login/loginMaster/login.html',
+            controller: ''
+        }
+    }
+})
+
+.state('admin', {
+    url: '/admin',
+    abstract: true,
+    templateUrl: 'templates/login/loginAdmin/menu.html'
+})
+
+.state('admin.init', {
+    url: '/init',
+    views: {
+        'menuContent': {
+            templateUrl: 'templates/login/loginAdmin/login.html',
+            controller: ''
+        }
+    }
+})
+
+.state('func', {
+    url: '/func',
+    abstract: true,
+    templateUrl: 'templates/login/loginFunc/menu.html'
+})
+
+.state('func.init', {
+    url: '/init',
+    views: {
+        'menuContent': {
+            templateUrl: 'templates/login/loginFunc/login.html',
+            controller: ''
+        }
+    }
+})
+
+.state('client', {
+    url: '/client',
+    abstract: true,
+    templateUrl: 'templates/login/loginClient/menu.html'
+})
+
+.state('client.init', {
+    url: '/init',
+    views: {
+        'menuContent': {
+            templateUrl: 'templates/login/loginClient/login.html',
+            controller: ''
+        }
+    }
 })
 
 .state('app.init', {

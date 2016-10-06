@@ -1,63 +1,101 @@
 angular.module('starter.controllers', [])
 
 .controller('AppLogin', function($scope, $ionicModal, $timeout, $http) {
+
     $scope.loginData = {};
     $scope.loginData.user = '';
     $scope.loginData.pass = '';
-    
+
+    $scope.ActionCss = 'message-output neutral';
+    $scope.validLogin = 'Verificando sessão... Aguarde por favor...';
+
+    $scope.checkSession = function (type) {
+
+        if(person.user == ''){
+            $scope.ActionCss = 'message-output neutral';
+            $scope.validLogin = 'Não há seções ativas. Faça o login!';
+        }
+        else{
+            $http.post(con.url + '/request/login',
+                       JSON.stringify(person),
+                       config)
+                        .success(function (data) {
+                            if(data == 'm'){
+                                document.location = '#/master/init';
+                            }
+                            else if(data == 'a'){
+                                document.location = '#/admin/init';
+                            }
+                            else if(data == 'f'){
+                                document.location = '#/func/init';
+                            }
+                            else if(data == 'c'){
+                                document.location = '#/client/init';
+                            }
+                            else if(type == 'init' && data.accessLogin == '!login'){
+                                
+                            }
+                        })
+
+        }
+
+
+            
+
+    }
     $scope.doLogin = function() {
-        doRequest = true;
         $scope.validLogin = '';
         $scope.ActionCss = '';
-//      console.log(JSON.stringify($scope.loginData)); 
-       if(!$scope.loginData.user) {
-           $scope.validLogin = 'Preencha todos os campos!';
+
+       if(!$scope.loginData.user || !$scope.loginData.user) {
             $scope.ActionCss = 'message-output warning';
-            doRequest = false;
-        }
-        if(!$scope.loginData.pass) {
             $scope.validLogin = 'Preencha todos os campos!';
-            $scope.ActionCss = 'message-output warning';
-            doRequest = false;
         }
+        else
+            $scope.doRequest()
 
-        if(doRequest){
-            
-            $scope.validLogin = 'Verificando conexão com internet...'; 
-            $scope.ActionCss = 'message-output neutral';
-            
-            $http.post(con.url + '/login/valid', 
-                       JSON.stringify($scope.loginData), 
-                       config)
-                .success(function (data, status, headers, config) {
-//                    $scope.ActionCss = '';
-                    if(data == 'done'){
-                        $scope.validLogin = 'Logado com sucesso!';
-                        $scope.ActionCss = 'message-output success';
-                    }
 
-                    else if(data == '!user!pass'){
-                        $scope.validLogin = 'Login e/ou senha inválidos!';
-                        $scope.ActionCss = 'message-output danger';
-                    }
-
-                    else if(data == 'inactive'){
-                        $scope.validLogin = 'Seu usuário foi inativado!';
-                        $scope.ActionCss = 'message-output info';
-                    }
-                
-                    else if(data == 'nullFields') {
-                        $scope.validLogin = 'Preencha todos os campos!';
-                        $scope.ActionCss = 'message-output warning';
-                    }
-
-                })
-                .error(function (data, status, header, config) {
-                    $scope.validLogin = 'Houve algum erro de login, contacte o suporte!';
-                    $scope.ActionCss = 'message-output danger';
-                });
-        }
     }
+    $scope.doRequest = function () {
+
+        $scope.validLogin = 'Verificando conexão com internet e fazendo requisição...'; 
+
+        $http.post(con.url + '/login/valid', 
+                   JSON.stringify($scope.loginData), 
+                   config)
+
+                    .success(function (data) {
+                        if(data == 'done'){
+                            $scope.ActionCss = 'message-output success';
+                            $scope.validLogin = 'Logado com sucesso!';
+                            person.user = $scope.loginData.user;
+                            $scope.checkSession();
+                        }
+                        else if(data == '!user!pass'){
+                            $scope.ActionCss = 'message-output danger';
+                            $scope.validLogin = 'Login e/ou senha inválidos!';
+                        }
+                        else if(data == 'inactive'){
+                            $scope.ActionCss = 'message-output info';
+                            $scope.validLogin = 'Seu usuário foi inativado!';
+                        }
+                        else if(data == 'nullFields') {
+                            $scope.ActionCss = 'message-output warning';
+                            $scope.validLogin = 'Preencha todos os campos!';
+                        }
+
+                    })
+        .error(function () {
+            $scope.ActionCss = 'message-output danger';
+            $scope.validLogin = 'Houve algum erro na conexão, verifique sua internet e tente novamente!';
+        });
+
+    }
+
+    //INICIO
+    $scope.checkSession('init');
+
+    
 })
 
 .controller('AppRegister', function($scope, $ionicModal, $timeout, $http) {
@@ -348,9 +386,14 @@ var parks = [];
 
 var parksOpen = [];
 
+var person = {
+    user: '',
+    pass: ''
+};
+
 var con = {
-    url: 'http://estacionapa.com.br'
-    //url: 'http://192.168.0.103:80'
+    //url: 'http://estacionapa.com.br'
+    url: 'http://192.168.0.103:80'
     //url: 'http://192.168.43.100:80'
     //url: 'http://192.168.40.180:80'
 };
@@ -359,5 +402,5 @@ var config = {
     headers: {
               'Content-Type': 'application/json'
     },
-    timeout: 3000
+    timeout: 5000
 }
