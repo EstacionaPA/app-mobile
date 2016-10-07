@@ -395,10 +395,6 @@ angular.module('starter.controllers', [])
                 $state.reload();
             })
 
-    $scope.ActionForm = '';
-    $scope.ActionCssFeedback = 'hidden';
-    $scope.Feedback = '';
-    
     $scope.reservar = function () {
         
         if($scope.dados.id_carro != '' && $scope.dados.id_estac != '' &&
@@ -407,11 +403,13 @@ angular.module('starter.controllers', [])
             
             $scope.dados.usuario = person.user;
 
+            $scope.ActionCssFeedback = 'message-output neutral';
+            $scope.Feedback = 'Verificando conexão com a internet e fazendo a requisição...';
+
             $http.post(con.url + '/vacancies/request',
                         JSON.stringify($scope.dados),
                         config)
             .success(function (data, status, header, config) {
-                alert('.' + data + '.');
                 if(data == 'done'){
                     $scope.ActionCssFeedback = 'message-output success';
                     $scope.Feedback = 'Sua vaga foi reservada com sucesso!!';
@@ -430,7 +428,7 @@ angular.module('starter.controllers', [])
                 }else if(data == '!validVacancy'){
                     $scope.ActionCssFeedback = 'message-output warning';
                     $scope.Feedback = 'A vaga informada é inválida ou maior do que a quantidade suportada!';
-                }else if(data == '!validHourBetween' || $data == '!validHourInitEnd'){
+                }else if(data == '!validHourBetween' || data == '!validHourInitEnd'){
                     $scope.ActionCssFeedback = 'message-output warning';
                     $scope.Feedback = 'Horario informado está entre um horario já reservado!';
                 }else if(data == '!validHourEnd'){
@@ -452,7 +450,7 @@ angular.module('starter.controllers', [])
         }
         else{
                 $scope.ActionCssFeedback = 'message-output danger';
-                $scope.Feedback = 'Preencha todos os campos!...';
+                $scope.Feedback = 'Preencha todos os campos!';
             }
 
             
