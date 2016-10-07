@@ -319,6 +319,8 @@ angular.module('starter.controllers', [])
                                     '<br>' +
                                     'Responsável: ' + data[i].responsavel + 
                                     '<br>' +  
+                                    'Quantidade de Vagas: ' + data[i].vagas +
+                                    '<br>' +
                                     'Horario: ' + data[i].h_func_init + ' Até ' + data[i].h_func_fim;
                       ul.appendChild(a);
                       document.getElementById('ListParksOpen').appendChild(ul);
@@ -457,6 +459,59 @@ angular.module('starter.controllers', [])
     }
 })
 
+.controller('RegisterCar', function($scope, $stateParams, $state, $http, $ionicHistory) {
+
+    $scope.ActionForm = 'hidden';
+    $scope.ActionCssFeedback = 'message-output neutral';
+    $scope.Feedback = 'Requisitando marcas...';
+
+    if(person.user == '') {
+            $scope.ActionCssFeedback = 'message-output neutral';
+            $scope.Feedback = 'Por favor, refaça o login...';
+            return 0;
+    }
+
+    $http.get(con.url + '/getMarks',
+                           config)
+                .success(function (data, status, header, config) {
+                    $scope.marks = data;
+                    $scope.ActionForm = '';
+                    $scope.ActionCssFeedback = 'message-output neutral';
+                    $scope.Feedback = 'Selecione uma marca!';
+                })
+                .error(function(data){
+                    $scope.ActionCssFeedback = 'message-output warning';
+                    $scope.Feedback = 'Nova tentativa...';
+                    $state.reload();
+                })
+
+    $scope.loadModels = function () {
+        $scope.models = [{}];
+        var marca = {'idMarca': document.getElementById('marca').value}; 
+        $scope.ActionCssFeedback = 'message-output neutral';
+        $scope.Feedback = 'Requisitando modelos da marca...';
+
+        $http.post(con.url + '/getModels',
+                            marca,
+                           config)
+                .success(function (data, status, header, config) {
+
+                    $scope.models = data;
+                    $scope.ActionCssFeedback = 'hidden';
+                    $scope.Feedback = '';
+                })
+                .error(function(data){
+                    $scope.ActionCssFeedback = 'message-output warning';
+                    $scope.Feedback = 'Não foi possivel requisitar as modelos, tente novamente!';
+                })
+    }
+
+    $scope.registrar = function () {
+        $scope.ActionCssFeedback = 'message-output neutral';
+        $scope.Feedback = 'Em implantação!';
+    }
+})
+
 .controller('sair', function($scope, $ionicHistory, $state) {
     
     person.user = '';
@@ -464,9 +519,8 @@ angular.module('starter.controllers', [])
     $ionicHistory.clearHistory();
     $ionicHistory.clearCache();
     $ionicHistory.nextViewOptions({ disableBack: true, historyRoot: true });
-    document.location = '#/app/init';
+    $state.go('app.init');
     
-
 })
 
                             //-------------------//
@@ -486,8 +540,8 @@ var person = {
 };
 
 var con = {
-    url: 'http://estacionapa.com.br'
-    //url: 'http://192.168.0.103:80'
+    //url: 'http://estacionapa.com.br'
+    url: 'http://localhost:80'
     //url: 'http://192.168.43.100:80'
     //url: 'http://192.168.40.180:80'
 };

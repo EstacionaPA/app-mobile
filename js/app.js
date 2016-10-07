@@ -79,7 +79,8 @@ $stateProvider
             templateUrl: 'templates/vacancies.html',
             controller: 'AppVacancy'
         }
-    }
+    },
+    cache: false
 })
 
 .state('app.showparks', {
@@ -165,6 +166,17 @@ $stateProvider
         'menuContent': {
             templateUrl: 'templates/login/loginClient/registerVacancy.html',
             controller: 'RegisterVacancy'
+        }
+    },
+    cache: false
+})
+
+.state('client.registerCar', {
+    url: '/registerCar',
+    views: {
+        'menuContent': {
+            templateUrl: 'templates/login/loginClient/registerCar.html',
+            controller: 'RegisterCar'
         }
     },
     cache: false

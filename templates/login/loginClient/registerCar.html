@@ -1,0 +1,43 @@
+<ion-view view-title="Registro de Carros">
+    <ion-content>
+        <div class="{{ActionForm}}">
+            <form name="form">
+                <label for="" class="item item-input">
+                    <div class="input-label">
+                        Placa
+                    </div>
+                    <input type="text" ng-model="dados.placa" placeholder="AAA9999"></input>
+                </label> 
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Marca
+                    </div>
+                    <select id="marca" ng-model="dados.marca" ng-change="loadModels()">
+                        <option value="{{mark.id}}" ng-repeat="mark in marks">
+                            {{mark.nome}}
+                        </option>
+                    </select>
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Modelo
+                    </div>
+                    <select id="modelo" ng-model="dados.modelo">
+                        <option value="{{model.id}}" ng-repeat="model in models">
+                            {{model.nome}}
+                        </option>
+                    </select>
+                </label>
+                <button 
+                    class="button button-block button-positive" 
+                    ng-click="registrar()">
+                    Reservar
+                </button> 
+            </form>
+        </div>
+        <p class="{{ActionCssFeedback}}">{{Feedback}}</p>
+        <div class="{{ActionCssPakrs}}" id="Result">
+
+        </div>
+    </ion-content>
+</ion-view>
