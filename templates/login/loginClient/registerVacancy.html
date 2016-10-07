@@ -22,14 +22,14 @@
                     <div class="input-label">
                         Vaga
                     </div>
-                    <input type="text" ng-model="dados.vaga" placeholder="OU DEIXE VAZIO"></input>
+                    <input type="text" ng-model="dados.vaga"></input>
                 </label> 
                 <label class="item item-input item-select">
                     <div class="input-label">
                         Hora Inicial                     
                     </div>
                     <select id="hourInit" ng-model="dados.hora_reserva">
-                        <option value="teste">00:00:00</option>
+                        <option>00:00:00</option>
                         <option>01:00:00</option>
                         <option>02:00:00</option>
                         <option>03:00:00</option>
@@ -96,7 +96,7 @@
                     class="button button-block button-positive" 
                     ng-click="reservar()"
                     Reservar
-                </button>
+                </button> Reservar
             </form>
         </div>
         <p class="{{ActionCssFeedback}}">{{Feedback}}</p>

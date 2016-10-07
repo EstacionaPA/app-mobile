@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppLogin', function($scope, $ionicModal, $timeout, $http) {
+.controller('AppLogin', function($scope, $ionicModal, $timeout, $http, $state) {
 
     $scope.loginData = {};
     $scope.loginData.user = '';
@@ -21,27 +21,22 @@ angular.module('starter.controllers', [])
                        config)
                         .success(function (data) {
                             if(data == 'm'){
-                                document.location = '#/master/init';
+                                $state.go('master.init');
                             }
                             else if(data == 'a'){
-                                document.location = '#/admin/init';
+                                $state.go('admin.init');
                             }
                             else if(data == 'f'){
-                                document.location = '#/func/init';
+                                $state.go('func.init');
                             }
                             else if(data == 'c'){
-                                document.location = '#/client/init';
+                                $state.go('client.init');
                             }
                             else if(type == 'init' && data.accessLogin == '!login'){
-                                document.location = '#/app/login';
+                                $state.go('app.init');
                             }
                         })
-
         }
-
-
-            
-
     }
     $scope.doLogin = function() {
         $scope.validLogin = '';
@@ -305,38 +300,6 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('AppLoading', function($scope, DataVacancy, $http){
-
-})
-
-.controller('', function($scope) {
-    var data = '';
-    if(data == 'empty'){
-        $scope.Feedback = 'Todos os estacionamentos disponíveis estão vazios. Registre uma vaga!';
-        return 0;
-    }else if(data == '!validHourConsult'){
-        $scope.Feedback = 'A hora é inválida!';
-        return 0;
-    }else if(data == '!validHourEnd'){
-        $scope.Feedback = 'O horario de fim escolhido está entre uma vaga já utilizada!';
-        return 0;
-    }else if(data == '!validHourInit'){
-        $scope.Feedback = 'O horario do inicio da reserva está entre uma vaga já escolhida!';
-        return 0;
-    }else if(data == '!validHourInitBetween' || 
-            data == '!validHourInitEnd'){
-        $scope.Feedback = 'O horario escolhido está entre o horario de uma vaga já escolhido!';
-        return 0;
-    }else if(data == ''){
-        $scope.Feedback = '';
-        return 0;
-    }else if(data == ''){
-        $scope.Feedback = '';
-        return 0;
-}
-
-})
-
 .controller('AppParks', function($scope, $stateParams, $state, $http) {
 
     parks = [];
@@ -388,12 +351,12 @@ angular.module('starter.controllers', [])
     $scope.ActionCssFeedback = 'message-output neutral';
     $scope.Feedback = 'Requisitando informações...';
 
-   /* if(person.user == '') {
+    if(person.user == '') {
             $scope.ActionForm = 'hidden';
             $scope.ActionCssFeedback = 'message-output neutral';
             $scope.Feedback = 'Por favor, refaça o login...';
             return 0;
-    }*/
+    }
 
     $http.post(con.url + '/getParks',
                            config)
@@ -418,9 +381,13 @@ angular.module('starter.controllers', [])
                 for(var i = 0; i<data.length; i++){
                     var option = document.createElement('option');
                     option.value = data[i].id_carro;
-                    option.innerHTML = 'Placa: ' + data[i].placa + ' *** ' + data[i].modelo + ' *** ' + data[i].marca;
+                    option.innerHTML = 'Placa: ' + data[i].placa + '. Modelo: ' + data[i].modelo;
                     document.getElementById('car').appendChild(option);
                 }
+
+                $scope.ActionForm = '';
+                $scope.ActionCssFeedback = 'hidden';
+                $scope.Feedback = '';
             })
             .error(function(data){
                 $scope.ActionCssFeedback = 'message-output warning';
@@ -436,43 +403,56 @@ angular.module('starter.controllers', [])
         
         if($scope.dados.id_carro != '' && $scope.dados.id_estac != '' &&
             $scope.dados.hora_reserva != '' && $scope.dados.hora_fim != '' &&
-            $scope.dados.data != ''){
+            $scope.dados.data != '' && $scope.dados.vaga != ''){
             
             $scope.dados.usuario = person.user;
-            
-            alert(JSON.stringify($scope.dados));
-            
+
             $http.post(con.url + '/vacancies/request',
                         JSON.stringify($scope.dados),
                         config)
             .success(function (data, status, header, config) {
-                alert(data);
-                /*
-                if(data == '!validHourConsult'){
-                    $scope.Feedback = 'A hora é inválida!';
-                    return 0;
+                alert('.' + data + '.');
+                if(data == 'done'){
+                    $scope.ActionCssFeedback = 'message-output success';
+                    $scope.Feedback = 'Sua vaga foi reservada com sucesso!!';
+                }else if(data == '!validHourFunc'){
+                    $scope.ActionCssFeedback = 'message-output warning';
+                    $scope.Feedback = 'O horario está fora do horario de funcionamento do estacionamento!';
+                }else if(data == '!validObject'){
+                    $scope.ActionCssFeedback = 'message-output danger';
+                    $scope.Feedback = 'Há campos sem preenchimento!!';
+                }else if(data == '!validDate'){
+                    $scope.ActionCssFeedback = 'message-output warning';
+                    $scope.Feedback = 'A data informada é inválida!';
+                }else if(data == '!validIdCar'){
+                    $scope.ActionCssFeedback = 'message-output warning';
+                    $scope.Feedback = 'O carro selecionado é inválido!';
+                }else if(data == '!validVacancy'){
+                    $scope.ActionCssFeedback = 'message-output warning';
+                    $scope.Feedback = 'A vaga informada é inválida ou maior do que a quantidade suportada!';
+                }else if(data == '!validHourBetween' || $data == '!validHourInitEnd'){
+                    $scope.ActionCssFeedback = 'message-output warning';
+                    $scope.Feedback = 'Horario informado está entre um horario já reservado!';
                 }else if(data == '!validHourEnd'){
-                    $scope.Feedback = 'O horario de fim escolhido está entre uma vaga já utilizada!';
-                    return 0;
+                    $scope.ActionCssFeedback = 'message-output warning';
+                    $scope.Feedback = 'O horario de término está entre um horario já reservado!';
                 }else if(data == '!validHourInit'){
-                    $scope.Feedback = 'O horario do inicio da reserva está entre uma vaga já escolhida!';
-                    return 0;
-                }else if(data == '!validHourInitBetween' || 
-                        data == '!validHourInitEnd'){
-                            $scope.Feedback = 'O horario escolhido está entre o horario de uma vaga já escolhido!';
-                            return 0;
+                    $scope.ActionCssFeedback = 'message-output warning';
+                    $scope.Feedback = 'O horario de início está entre um horario já reservado!';
+                }else if(data == '!validHourRequest'){
+                    $scope.ActionCssFeedback = 'message-output warning';
+                    $scope.Feedback = 'A hora de início é maior que a do fim!';
                 }
-                */
             })
             .error(function(data){
-                $scope.ActionCssFeedback = 'message-output warning';
+                $scope.ActionCssFeedback = 'message-output neutral';
                 $scope.Feedback = 'Não foi possivel fazer conexão. Verifique a internet e tentenovamente!';
             });
             
         }
         else{
-                $scope.ActionCssFeedback = 'message-output warning';
-                $scope.Feedback = 'Preencha os campos obrigatórios!...';
+                $scope.ActionCssFeedback = 'message-output danger';
+                $scope.Feedback = 'Preencha todos os campos!...';
             }
 
             
@@ -508,8 +488,8 @@ var person = {
 };
 
 var con = {
-    //url: 'http://estacionapa.com.br'
-    url: 'http://192.168.0.103:80'
+    url: 'http://estacionapa.com.br'
+    //url: 'http://192.168.0.103:80'
     //url: 'http://192.168.43.100:80'
     //url: 'http://192.168.40.180:80'
 };
@@ -518,5 +498,5 @@ var config = {
     headers: {
               'Content-Type': 'application/json'
     },
-    timeout: 1000
+    timeout: 7000
 }
